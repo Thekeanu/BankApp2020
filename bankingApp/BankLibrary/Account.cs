@@ -6,7 +6,7 @@ namespace BankLibrary
     public class Account
     {
         public string IBAN { get; set; }
-        public decimal Balance { get; set; }
+        public decimal Balance { get; private set; }
         public DateTime CreationDate { get; set; }
         public decimal Intrest { get; set; }
 
@@ -24,26 +24,27 @@ namespace BankLibrary
             Intrest = intrest;
         }
 
-        public bool Deposit(decimal amount)
+        public void Deposit(decimal amount)
         {
             if (amount > 0)
             {
                 Balance += amount;
-                return true;
             }
             else
             {
-                return false;
+                throw new AmountException();
             }
         }
 
-        public bool Withdraw(decimal amount) {
+        public void Withdraw(decimal amount) {
             if (amount > 0 && amount < Balance)
             {
                 Balance -= amount;
-                return true;
             }
-            else { return false; }
+            else
+            {
+                throw new AmountException();
+                
         }
     }
 
